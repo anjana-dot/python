@@ -1,0 +1,26 @@
+<!--models.py-->
+from django.db import models
+
+# Create your models here.
+class Course(models.Model):
+    image=models.ImageField(upload_to='images/', blank=True, null=True) #pip install pillow
+    title=models.CharField(max_length=100)
+    description=models.TextField()
+    price=models.IntegerField()
+
+    def __str__(self):
+        return self.title
+
+<!--admin.py-->
+rom django.contrib import admin
+from .models import Course
+# Register your models here.
+admin.site.register(Course)
+
+<!--views.py-->
+from django.shortcuts import render
+from .models import Course
+# Create your views here.
+def show(request):
+    data=Course.objects.all()
+    return render(request,'show.html', {'data': data})
